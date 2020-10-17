@@ -49,9 +49,9 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
         {
             echo "<style>.info{text-align:center; margin:20px 0;} .info > *{margin:0 0 15px} .buttons a{background:#467b96; color:#fff; border-radius:4px; padding: 8px 10px; display:inline-block;}.buttons a+a{margin-left:10px}</style>";
             echo "<div class='info'>";
-            echo "<h2>基于爆胎看板娘js 的 插件 (" . $version . ")</h2>";
+            echo "<h2>一款基于爆胎看板娘js的Live2D Typecho插件 (" . $version . ")</h2>";
             echo "<p>By: <a href='https://blog.iucky.cn'>Wibus</a></p>";
-            echo "<p class='buttons'><a href='https://blog.iucky.cn/Y-disk/32.html'>插件说明</a>";
+            echo "<p class='buttons'><a href='https://blog.iucky.cn/system/live2d.html'>插件说明</a>";
             echo "<p>感谢 爆胎 的大力支持！</p>";
 
             echo "</div>";
