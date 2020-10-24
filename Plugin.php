@@ -5,7 +5,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  *
  * @package Live2D
  * @author Wibus
- * @version 1.0.0
+ * @version 1.0.1
  * @link https://blog.iucky.cn
  */
 class Live2D_Plugin implements Typecho_Plugin_Interface
@@ -75,8 +75,8 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
         $Sites = new Typecho_Widget_Helper_Form_Element_Radio(
             'Sites',
             array(
-                '0' => _t('左边'),
-                '1' => _t('右边'),
+                '0' => _t('右边'),
+                '1' => _t('左边'),
             ),
             '0',
             _t('看板娘位置'),
