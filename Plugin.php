@@ -93,9 +93,7 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
      */
     public static function personalConfig(Typecho_Widget_Helper_Form $form)
     {
-        if ($Font == 1) { //开启font
-            echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">';
-        }
+
     }
 
     /**
@@ -107,8 +105,8 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
      */
     public static function header()
     {
-        $options = Helper::options();
-        $Font = $options->plugin('Live2D')->Font;
+
+        
     }
 
     /**
@@ -123,8 +121,13 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
         //  获取用户配置
         $options = Helper::options();
         $Sites = $options->plugin('Live2D')->Sites;
-
-       
+        $Font = $options->plugin('Live2D')->Font;
+        if ($Font == 0) { //开启font
+            echo "<!--Live2D依赖-->";
+            echo '<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">';
+        }elseif ($Font == 1) {
+            echo "<!--Live2D未引入font-->";
+        }
         if ($Sites) { 
             echo"<script src=\"//api.itggg.cn/liive2d/autoload.js\"></script>";
         } else {
