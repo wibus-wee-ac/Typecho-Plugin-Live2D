@@ -62,8 +62,8 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
         $Font = new Typecho_Widget_Helper_Form_Element_Radio(
             'Font',
             array(
-                '0' => _t('否'),
-                '1' => _t('是'),
+                '0' => _t('是'),
+                '1' => _t('否'),
             ),
             '1',
             _t('是否引入FontAwesome 4.7.0'),
@@ -93,10 +93,8 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
      */
     public static function personalConfig(Typecho_Widget_Helper_Form $form)
     {
-        if ($Font) { //开启font
-            echo"<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css\">";
-        } else {
-
+        if ($Font == 1) { //开启font
+            echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">';
         }
     }
 
