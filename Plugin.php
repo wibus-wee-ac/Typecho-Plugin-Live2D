@@ -1,3 +1,5 @@
+
+
 <?php
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 /**
@@ -5,9 +7,10 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  *
  * @package Live2D
  * @author Wibus
- * @version 1.0.1
+ * @version 1.1.0
  * @link https://blog.iucky.cn
  */
+
 class Live2D_Plugin implements Typecho_Plugin_Interface
 {
     /**
@@ -47,16 +50,22 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
         // 插件信息与更新检测
         function check_update($version)
         {
+
             echo "<style>.info{text-align:center; margin:20px 0;} .info > *{margin:0 0 15px} .buttons a{background:#467b96; color:#fff; border-radius:4px; padding: 8px 10px; display:inline-block;}.buttons a+a{margin-left:10px}</style>";
             echo "<div class='info'>";
             echo "<h2>一款基于爆胎看板娘js的Live2D Typecho插件 (" . $version . ")</h2>";
+
+            echo "<h3>最新版本：<span style='padding: 2px 4px; background-image: linear-gradient(90deg, rgba(73, 200, 149, 1), rgba(38, 198, 218, 1)); background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; color: rgba(255, 255, 255, 1); border-width: 0.25em 0' id='ver'>获取中...</span>&nbsp;&nbsp;当前版本：".$version. "</h3>";
+            echo "<h3 style='color: rgba(255, 153, 0, 1)' id='description'></h3>";
             echo "<p>By: <a href='https://blog.iucky.cn'>Wibus</a></p>";
-            echo "<p class='buttons'><a href='https://blog.iucky.cn/system/live2d.html'>插件说明</a>";
+            echo "<p><span class='buttons'><a href='https://blog.iucky.cn/system/live2d.html'>插件说明</a></span>
+            <span id='btn' class='buttons'><a id='description'>获取更新说明</a></span></p>";
             echo "<p>感谢 爆胎 的大力支持！</p>";
+            echo "<script src='https://api.iucky.cn/plugins/update/live2d.js'></script>";
 
             echo "</div>";
         }
-        check_update("1.0.0");
+        check_update("1.1.0");
 
         // 是否载入Font
         $Font = new Typecho_Widget_Helper_Form_Element_Radio(
@@ -129,9 +138,9 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
             echo "<!--Live2D未引入font-->";
         }
         if ($Sites) { 
-            echo"<script src=\"//api.itggg.cn/liive2d/autoload.js\"></script>";
+            echo"<script src='//api.itggg.cn/liive2d/autoload.js'></script>";
         } else {
-            echo"<script src=\"//api.itggg.cn/live2d/autoload.js\"></script>";
+            echo"<script src='//api.itggg.cn/live2d/autoload.js'></script>";
         }
         echo '<script type="text/javascript">
         console.log("\n %c Live2D插件 %c by Wibus | https://blog.iucky.cn ", "color:#444;background:#eee;padding:5px 0;", "color:#eee;background:#444;padding:5px 0;");
@@ -139,4 +148,10 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
         echo"  
         ";
     }
+
+
+
+
+
+
 }
