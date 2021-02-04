@@ -159,7 +159,7 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
             'mobile',
             array(
                 'false' => _t('不显示'),
-                'ture' => _t('显示'),
+                'true' => _t('显示'),
             ),
             'false',
             _t('是否在手机端显示'),
