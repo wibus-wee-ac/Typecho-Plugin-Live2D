@@ -228,7 +228,6 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
             $Json = $Jsonn;
         }
         if ($Jsonn == 'guanbi'){
-            echo 'console.log(\'off\')';
             if ($Font == 0) { //开启爆胎API
                 echo "<!--Live2D依赖-->";
                 echo '<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">';
