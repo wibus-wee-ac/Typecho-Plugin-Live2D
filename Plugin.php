@@ -166,12 +166,6 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
             _t('请注意，此选项有可能会导致手机端掉帧！')
         );
         $form->addInput($mobile);
-
-        $hOffset = new Typecho_Widget_Helper_Form_Element_Text(
-            'hOffset',
-            NULL,_t('70'),_t('模型水平偏移值'),_t('默认值：70')
-        );
-        $form->addInput($hOffset);
         $hOffset = new Typecho_Widget_Helper_Form_Element_Text(
             'hOffset',
             NULL,_t('70'),_t('模型水平偏移值'),_t('默认值：70')
@@ -181,7 +175,7 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
             'vOffset',
             NULL,_t('0'),_t('模型垂直偏移值'),_t('默认值：0')
         );
-        $form->addInput($hOffset);
+        $form->addInput($vOffset);
     }
     /**
      * 个人用户的配置面板
