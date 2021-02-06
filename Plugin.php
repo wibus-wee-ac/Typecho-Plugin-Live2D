@@ -7,7 +7,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  *
  * @package Live2D
  * @author Wibus
- * @version 2.0.0
+ * @version 2.1.0
  * @link https://blog.iucky.cn
  */
 
@@ -21,7 +21,8 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
      * @throws Typecho_Plugin_Exception
      */
     public static function activate()
-    {
+    {   
+        Typecho_Plugin::factory('Widget_Archive')->footer = array(__CLASS__, 'header');
         Typecho_Plugin::factory('Widget_Archive')->footer = array(__CLASS__, 'footer');
         return "Live2D插件启动成功，请进入插件设置进行简单配置！";
     }
@@ -66,9 +67,20 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
             echo "</div>";
 
         }
-        check_update("2.0.0");
+        check_update("2.1.0");
 
-
+        // 是左右？
+        $Sites = new Typecho_Widget_Helper_Form_Element_Radio(
+            'Sites',
+            array(
+                'right' => _t('右边'),
+                'left' => _t('左边'),
+            ),
+            'right',
+            _t('全局控制看板娘位置'),
+            _t('选择爆胎&JSON看板娘在屏幕出现的位置')
+        );
+        $form->addInput($Sites);
         $Json = new Typecho_Widget_Helper_Form_Element_Select(
             'Json',
             array(
@@ -106,52 +118,26 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
     
             ),
             '0',
-            '选择Live2D人物模型JSON（最高优先级选项）',
+            'JSON看板娘选择Live2D人物模型JSON（最高优先级选项）',
             '若选择了此选项，自定义JSON可以填写在下面的选项中，但其他的选项都<b>无效</b>了'
         );
         $form->addInput($Json->multiMode());
 
         $JsonSelf = new Typecho_Widget_Helper_Form_Element_Text(
             'JsonSelf',
-            NULL,NULL,_t('自定义JSON（url格式）'),_t('可以通过自定义Json来使用除插件自带以外的不同的模型，优先级最高')
+            NULL,NULL,_t('JSON看板娘自定义JSON（url格式）'),_t('可以通过自定义Json来使用除插件自带以外的不同的模型，优先级最高')
         );
         $form->addInput($JsonSelf);
 
-        // 是否载入
-        $Font = new Typecho_Widget_Helper_Form_Element_Radio(
-            'Font',
-            array(
-                '0' => _t('是'),
-                '1' => _t('否'),
-            ),
-            '1',
-            _t('是否使用爆胎API版本（无法控制大小）'),
-            _t('若您已经设置了第一个选项，则此选项<b>无效</b>')
-        );
-        $form->addInput($Font);
-
-        // 是左右？
-        $Sites = new Typecho_Widget_Helper_Form_Element_Radio(
-            'Sites',
-            array(
-                'right' => _t('右边'),
-                'left' => _t('左边'),
-            ),
-            'right',
-            _t('看板娘位置'),
-            _t('选择看板娘在屏幕出现的位置')
-        );
-        $form->addInput($Sites);
-
         $Width = new Typecho_Widget_Helper_Form_Element_Text(
             'Width',
-            NULL,_t('160'),_t('模型宽度'),_t('默认值：160')
+            NULL,_t('160'),_t('JSON看板娘模型宽度'),_t('默认值：160')
         );
         $form->addInput($Width);
 
         $Height = new Typecho_Widget_Helper_Form_Element_Text(
             'Height',
-            NULL,_t('200'),_t('模型高度'),_t('默认值：200')
+            NULL,_t('200'),_t('JSON看板娘模型高度'),_t('默认值：200')
         );
         $form->addInput($Height);
 
@@ -162,20 +148,38 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
                 'true' => _t('显示'),
             ),
             'false',
-            _t('是否在手机端显示'),
+            _t('JSON看板娘是否在手机端显示'),
             _t('请注意，此选项有可能会导致手机端掉帧！')
         );
         $form->addInput($mobile);
         $hOffset = new Typecho_Widget_Helper_Form_Element_Text(
             'hOffset',
-            NULL,_t('70'),_t('模型水平偏移值'),_t('默认值：70')
+            NULL,_t('70'),_t('JSON看板娘模型水平偏移值'),_t('默认值：70')
         );
         $form->addInput($hOffset);
         $vOffset = new Typecho_Widget_Helper_Form_Element_Text(
             'vOffset',
-            NULL,_t('0'),_t('模型垂直偏移值'),_t('默认值：0')
+            NULL,_t('0'),_t('JSON看板娘模型垂直偏移值'),_t('默认值：0')
         );
         $form->addInput($vOffset);
+
+
+        // 是否载入
+        $Font = new Typecho_Widget_Helper_Form_Element_Radio('Font',array('1' => _t('是'),'1' => _t('否'),),'1',_t('是否使用爆胎API版本（无法控制大小）'),_t('若您已经设置了第一个选项，则此选项<b>无效</b>'));
+        $form->addInput($Font);
+
+        $modelId = new Typecho_Widget_Helper_Form_Element_Text(
+            'modelId',
+            NULL,NULL,_t('默认爆胎看板娘模型modelID'),_t('设置初次进入的默认人物ID，默认值：1')
+        );
+        $form->addInput($modelId);
+        $modelTexturesId = new Typecho_Widget_Helper_Form_Element_Text(
+            'modelTexturesId',
+            NULL,NULL,_t('默认爆胎看板娘模型modelTexturesId'),_t('设置初次进入的默认皮肤ID，默认值：87')
+        );
+        $form->addInput($modelTexturesId);
+
+
     }
     /**
      * 个人用户的配置面板
@@ -186,7 +190,6 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
      */
     public static function personalConfig(Typecho_Widget_Helper_Form $form)
     {
-
     }
 
     /**
@@ -198,8 +201,20 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
      */
     public static function header()
     {
-
-        
+        $options = Helper::options();
+        $Font = $options->plugin('Live2D')->Font;
+        $modelId = $options->plugin('Live2D')->modelId;
+        $modelTexturesId = $options->plugin('Live2D')->modelTexturesId;
+        if ($modelId > 0){
+            echo "
+            <script>
+            if (localStorage.getItem('SecondComeIn') != 'yes') {
+                localStorage.setItem('modelId', '".$modelId."');
+                localStorage.setItem('modelTexturesId', '".$modelTexturesId."');
+                localStorage.setItem('SecondComeIn', 'Yes');
+            }
+            </script>";
+        };
     }
 
     /**
