@@ -165,7 +165,7 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
 
 
         // 是否载入
-        $Font = new Typecho_Widget_Helper_Form_Element_Radio('Font',array('1' => _t('是'),'1' => _t('否'),),'1',_t('是否使用爆胎API版本（无法控制大小）'),_t('若您已经设置了第一个选项，则此选项<b>无效</b>'));
+        $Font = new Typecho_Widget_Helper_Form_Element_Radio('Font',array('0' => _t('是'),'1' => _t('否'),),'0',_t('是否使用爆胎API版本（无法控制大小）'),_t('若您已经设置了第一个选项，则此选项<b>无效</b>'));
         $form->addInput($Font);
 
         $modelId = new Typecho_Widget_Helper_Form_Element_Text(
