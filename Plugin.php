@@ -208,10 +208,9 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
         if ($modelId > 0){
             echo "
             <script>
-            if (localStorage.getItem('SecondComeIn') != 'yes') {
+            if (modelId === null) {
                 localStorage.setItem('modelId', '".$modelId."');
                 localStorage.setItem('modelTexturesId', '".$modelTexturesId."');
-                localStorage.setItem('SecondComeIn', 'Yes');
             }
             </script>";
         };
