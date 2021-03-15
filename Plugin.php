@@ -208,7 +208,7 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
         if ($modelId > 0){
             echo "
             <script>
-            if (modelId === null) {
+            if localStorage.setItem('modelTexturesId') === null) {
                 localStorage.setItem('modelId', '".$modelId."');
                 localStorage.setItem('modelTexturesId', '".$modelTexturesId."');
             }
@@ -245,7 +245,7 @@ class Live2D_Plugin implements Typecho_Plugin_Interface
             if ($Font == 0) { //开启爆胎API
                 echo "<!--Live2D依赖-->";
                 echo '<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">';
-                if ($Sites == 'right') { 
+                if ($Sites == 'left') { 
                     echo"<script src='//api.itggg.cn/liive2d/autoload.js'></script>";
                 } else {
                     echo"<script src='//api.itggg.cn/live2d/autoload.js'></script>";
